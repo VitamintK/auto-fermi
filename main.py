@@ -58,8 +58,9 @@ def is_maybe_year(x):
 def get_punctuationless(x):
     return re.sub(r'([^\w]+$)|(^[^\w]+)', '', x)
 
-x = wikipedia.page("Human")
+x = wikipedia.page("Los Angeles")
 ans = []
+unmaskeds = []
 for section in x.sections:
     text = x.section(section)
     pars = text.split('\n')
@@ -75,7 +76,20 @@ for section in x.sections:
                 masked.append(word)
         if len(unmasked) > 0:
             ans.append(' '.join(masked))
-for a in ans:
+            unmaskeds.append(unmasked)
+
+# to fix:
+# Cabrillo claimed the area of southern California for the Spanish Empire in 1593 while on an official military exploring expedition (year is earlier than 1600)
+# reached the present site of Los Angeles on August XXX 1769. (date of the month)
+# On September XXX 1781 (date of the month)
+# on January XXX 1847. (date of the month)
+# 
+
+for i, a in enumerate(ans):
     print(a)
+    for um in unmaskeds[i]:
+        u = input("enter xxx: ")
+        print(um)
+
 
 # running this on "Human" or "Used car" or "Seawater" works OK
